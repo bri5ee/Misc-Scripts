@@ -7,25 +7,25 @@
 
     - name: Securing SSH [Disable Root Login]
       lineinfile:
-        path: /etc/ssh/sshd_conf
+        path: /etc/ssh/sshd_config
         regexp: '^PermitRootLogin'
         line: PermitRootLogin = no
 
     - name: Securing SSH [Disable Empty Passwords]
       lineinfile:
-        path: /etc/ssh/sshd_conf
+        path: /etc/ssh/sshd_config
         regexp: 'PermitEmptyPasswords'
         line: PermitEmptyPasswords = no
 
     - name: Securing SSH [Disable X11 Forwarding]
       lineinfile:
-        path: /etc/ssh/sshd_conf
+        path: /etc/ssh/sshd_config
         regexp: 'X11Forwarding'
         line: X11Forwarding = no
 
     - name: Securing SSH [Enable Privilege Separation]
       lineinfile:
-        path: /etc/ssh/sshd_conf
+        path: /etc/ssh/sshd_config
         regexp: 'UsePrivilegeSeparation'
         line: UsePrivilegeSeparation = yes
 
