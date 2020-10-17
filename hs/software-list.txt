@@ -2,7 +2,6 @@ telnet
 tftp
 xinetd
 openbsd-inetd
-xserver-xorg*
 avahi-daemon
 CUPS
 isc-dhcp-server
