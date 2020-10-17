@@ -19,17 +19,6 @@ if [ ! -f "$ADMINS" ]; then
         exit 1
 fi
 
-# Add users / check for existing users
-echo "Add users / check for existing users"
-echo "  "
-for user in $(cat users.txt); do
-        grep -q $user /etc/passwd || useradd -m -s /bin/bash $user
-        crontab -u $user -r
-        echo "$user checked for existence"
-done
-echo "Finished adding users"
-echo " "
-
 # Remove any users from sudoers group
 echo "Remove any users from sudoers group"
 echo "  "
