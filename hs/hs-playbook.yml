@@ -1,0 +1,80 @@
+---
+  - hosts: localhost
+    become: yes
+    tasks:
+
+#SECURE SSH
+
+    - name: Securing SSH [Disable Root Login]
+      lineinfile:
+        path: /etc/ssh/sshd_conf
+        regexp: '^PermitRootLogin'
+        line: PermitRootLogin = no
+
+    - name: Securing SSH [Disable Empty Passwords]
+      lineinfile:
+        path: /etc/ssh/sshd_conf
+        regexp: 'PermitEmptyPasswords'
+        line: PermitEmptyPasswords = no
+
+    - name: Securing SSH [Disable X11 Forwarding]
+      lineinfile:
+        path: /etc/ssh/sshd_conf
+        regexp: 'X11Forwarding'
+        line: X11Forwarding = no
+
+    - name: Securing SSH [Enable Privilege Separation]
+      lineinfile:
+        path: /etc/ssh/sshd_conf
+        regexp: 'UsePrivilegeSeparation'
+        line: UsePrivilegeSeparation= yes
+
+#SECURE PHP
+
+    - name: RFI Prevention (1/2) [allow_url_fopen = Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^allow_url_fopen'
+        line: allow_url_fopen= Off
+    
+    - name: RFI Prevention (2/2) [allow_url_include= Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^allow_url_include'
+        line: allow_url_include = Off
+
+    - name: PHP VERSION EXPOSURE FIX (1/4) [expose_php = Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^expose_php' 
+        line: expose_php = Off
+
+    - name: PHP VERSION EXPOSURE FIX (2/4) [track_errors = Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^track_errors' 
+        line: track_errors = Off
+
+    - name: PHP VERSION EXPOSURE FIX (3/4) [html_errors Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^html_errors' 
+        line: html_errors = Off
+
+    - name: PHP VERSION EXPOSURE FIX (4/4) [display_errors = Off]
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^display_errors' 
+        line: display_errors = Off
+
+    - name: DISABLE CRITICAL PHP FUNCTIONS (1/1)
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^disable_functions'
+        line: disable_functions = exec, system, shell_exec, passthru, popen, curl_exec, curl_multi_exec, parse_ini_file, show_source, proc_open, pcntl_exec 
+
+    - name: DISABLE PHP FILE UPLOADS (1/1)
+      lineinfile:
+        path: [php-ini-path]
+        regexp: '^file_uploads'
+        line: file_uploads = Off
