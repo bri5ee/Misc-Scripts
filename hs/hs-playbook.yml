@@ -27,7 +27,7 @@
       lineinfile:
         path: /etc/ssh/sshd_conf
         regexp: 'UsePrivilegeSeparation'
-        line: UsePrivilegeSeparation= yes
+        line: UsePrivilegeSeparation = yes
 
 #SECURE PHP
 
@@ -35,7 +35,7 @@
       lineinfile:
         path: [php-ini-path]
         regexp: '^allow_url_fopen'
-        line: allow_url_fopen= Off
+        line: allow_url_fopen = Off
     
     - name: RFI Prevention (2/2) [allow_url_include= Off]
       lineinfile:
